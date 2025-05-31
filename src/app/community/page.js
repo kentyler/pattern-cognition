@@ -48,7 +48,7 @@ export default function Community() {
                 <span className="text-3xl">🎯</span>
               </div>
               <h3 className="text-xl font-semibold mb-4">Real Impact</h3>
-              <p className="text-gray-600">Apply cutting-edge collaboration science to improve your team's performance and decision-making</p>
+              <p className="text-gray-600">Apply cutting-edge collaboration science to improve your team&apos;s performance and decision-making</p>
             </div>
           </div>
         </div>

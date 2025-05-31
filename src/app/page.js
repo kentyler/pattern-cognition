@@ -106,7 +106,7 @@ export default function Home() {
         <div className="max-w-4xl mx-auto">
           <h2 className="text-3xl font-bold text-center mb-8">The Answer: Conversational DNA</h2>
           <p className="text-lg text-center mb-12 max-w-2xl mx-auto">
-            After analyzing hundreds of conversations, we've discovered that productive dialogue follows detectable patterns—like genetic sequences—that can be mapped, measured, and replicated.
+            After analyzing hundreds of conversations, we&apos;ve discovered that productive dialogue follows detectable patterns&mdash;like genetic sequences&mdash;that can be mapped, measured, and replicated.
           </p>
           
           <div className="grid md:grid-cols-2 gap-8">
@@ -136,7 +136,7 @@ export default function Home() {
       {/* CTA Section */}
       <div className="py-16 px-4">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-4">Ready to Decode Your Team's Intelligence?</h2>
+          <h2 className="text-3xl font-bold mb-4">Ready to Decode Your Team&apos;s Intelligence?</h2>
           <p className="text-lg mb-8">
             Join the Pattern Cognition community and be among the first to experience conversational DNA analysis.
           </p>

@@ -146,13 +146,13 @@ export default function HowItWorks() {
             
             <div className="space-y-6">
               <div>
-                <h4 className="font-semibold mb-2">Participant A: "QRQRSRQ"</h4>
+                <h4 className="font-semibold mb-2">Participant A: &ldquo;QRQRSRQ&rdquo;</h4>
                 <p className="text-sm text-gray-600 mb-2">Dominant Pattern: Reframing (43%) + Questioning (43%)</p>
                 <p className="text-sm">Profile: Perspective-shifting explorer who consistently introduces new framings and asks probing questions</p>
               </div>
               
               <div>
-                <h4 className="font-semibold mb-2">Participant B: "BSESBS"</h4>
+                <h4 className="font-semibold mb-2">Participant B: &ldquo;BSESBS&rdquo;</h4>
                 <p className="text-sm text-gray-600 mb-2">Dominant Pattern: Building (50%) + Synthesizing (33%)</p>
                 <p className="text-sm">Profile: Synthesis architect who builds frameworks and integrates diverse concepts</p>
               </div>
@@ -218,7 +218,7 @@ export default function HowItWorks() {
      {/* CTA Section */}
       <div className="bg-yellow-300 py-16 px-4">
         <div className="max-w-2xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-black mb-4">Ready to Analyze Your Team's DNA?</h2>
+          <h2 className="text-3xl font-bold text-black mb-4">Ready to Analyze Your Team&apos;s DNA?</h2>
           <p className="text-lg text-black mb-8">
             Start with a free analysis and discover your collaboration patterns.
           </p>

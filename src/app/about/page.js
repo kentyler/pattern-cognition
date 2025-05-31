@@ -32,13 +32,13 @@ export default function About() {
             </p>
             
             <p className="mb-6">
-              Traditional approaches focused on mimicking what people say—their content, opinions, and knowledge. But this missed something fundamental: the unique ways people think and engage with ideas.
+              Traditional approaches focused on mimicking what people say&mdash;their content, opinions, and knowledge. But this missed something fundamental: the unique ways people think and engage with ideas.
             </p>
             
             <div className="bg-gray-50 p-6 rounded-lg my-8">
               <h3 className="text-xl font-semibold mb-4">The Breakthrough Insight</h3>
               <p className="italic text-lg">
-                "Avatar authenticity comes from reproducing how someone thinks, not what they know. Focus on characteristic moves: causal reversal, binary dissolution, requests for concrete examples."
+                &ldquo;Avatar authenticity comes from reproducing how someone thinks, not what they know. Focus on characteristic moves: causal reversal, binary dissolution, requests for concrete examples.&rdquo;
               </p>
             </div>
             
@@ -87,7 +87,7 @@ export default function About() {
             <div className="bg-yellow-50 border-l-4 border-yellow-400 p-6 my-8">
               <h3 className="text-xl font-semibold mb-2">The Bigger Picture</h3>
               <p>
-                Pattern Cognition could become the foundation for evidence-based organizational development, replacing generic "best practices" with personalized insights based on how specific teams actually collaborate.
+                Pattern Cognition could become the foundation for evidence-based organizational development, replacing generic &#x201C;best practices&#x201D; with personalized insights based on how specific teams actually collaborate.
               </p>
             </div>
           </div>
