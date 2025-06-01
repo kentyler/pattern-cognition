@@ -44,6 +44,9 @@ export default function Navigation() {
                 </Link>
               );
             })}
+            <Link href="/upload" className="btn btn-primary ml-4">
+              Get Started
+            </Link>
           </div>
           
           {/* Mobile menu button */}
@@ -85,6 +88,12 @@ export default function Navigation() {
               </Link>
             );
           })}
+          <Link 
+            href="/upload" 
+            className="mobile-link bg-yellow-100 hover:bg-yellow-200 text-yellow-900 font-semibold"
+          >
+            Get Started
+          </Link>
         </div>
       </div>
     </nav>

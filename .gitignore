@@ -39,3 +39,8 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+pg_dump_public_schema.ps1
+public_schema.sql
+
+
