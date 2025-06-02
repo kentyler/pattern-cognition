@@ -1,156 +1,175 @@
-import Logo from '../components/logo';
+import Logo from '../components/logo.js';
 import Link from 'next/link';
 
 export default function Home() {
   return (
-    <div className="min-h-screen">
+    <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="section-header">
-        <div className="header-content">
-          <h1>Decode the DNA of Group Intelligence</h1>
-        </div>
-      </section>
-      <div className="py-16 px-4">
-        <div className="container">
-          <p className="mb-8 max-w-2xl text-xl">
-            Organizations spend $37 billion annually on meeting technology, but still can't answer: Why do some teams consistently break through while others get stuck?
+        <div className="header-content text-center">
+          <Logo size="large" />
+          <h1>Discover Your Conversation DNA</h1>
+          <p className="text-xl mt-4 max-w-3xl mx-auto">
+            Revolutionary AI analysis that reveals the hidden patterns in how you think and collaborate together
           </p>
-          <div className="space-x-4">
-            <Link href="/community" className="btn btn-primary">
-              Join Our Community
+          <div className="mt-8">
+            <Link href="/upload">
+              <button className="bg-yellow-300 text-black px-8 py-4 rounded-lg text-xl font-bold hover:bg-yellow-500 transition-colors mr-4">
+                Analyze Your Conversation
+              </button>
             </Link>
-            <Link href="/how-it-works" className="btn btn-outline">
-              Learn How It Works
+            <Link href="/about">
+              <button className="border-2 border-gray-400 text-gray-700 px-8 py-4 rounded-lg text-xl font-semibold hover:bg-gray-100 transition-colors">
+                Learn More
+              </button>
             </Link>
           </div>
         </div>
-      </div>
-
-      {/* Problem Section */}
-      <section className="section-header">
-        <div className="header-content">
-          <h2>The Questions We Can Finally Answer</h2>
-        </div>
       </section>
-      <div className="py-16 px-4">
-        <div className="container">
-          <div className="grid md:grid-cols-3 gap-8">
-            <div className="text-left">
-              <div className="flex justify-start mb-4">
-                <svg width="80" height="16" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="12" x2="120" y2="12" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="12" y1="4" x2="12" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="36" y1="4" x2="36" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="60" y1="4" x2="60" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="84" y1="4" x2="84" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="108" y1="4" x2="108" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <circle cx="12" cy="12" r="6" fill="#000000"/>
-                  <circle cx="36" cy="12" r="6" fill="#FFFFFF" stroke="#000000" strokeWidth="1"/>
-                  <circle cx="60" cy="12" r="6" fill="#000000"/>
-                  <circle cx="84" cy="12" r="6" fill="#FFFFFF" stroke="#000000" strokeWidth="1"/>
-                  <circle cx="108" cy="12" r="6" fill="#000000"/>
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-left">Why do some teams consistently innovate while others stagnate?</h3>
-              <p className="text-gray-600 text-left">Discover the hidden patterns that separate high-performing teams from the rest.</p>
-            </div>
-            
-            <div className="text-left">
-              <div className="flex justify-start mb-4">
-                <svg width="80" height="16" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="12" x2="120" y2="12" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="12" y1="4" x2="12" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="36" y1="4" x2="36" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="60" y1="4" x2="60" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="84" y1="4" x2="84" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="108" y1="4" x2="108" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <circle cx="12" cy="12" r="6" fill="#000000"/>
-                  <circle cx="36" cy="12" r="6" fill="#FFFFFF" stroke="#000000" strokeWidth="1"/>
-                  <circle cx="60" cy="12" r="6" fill="#000000"/>
-                  <circle cx="84" cy="12" r="6" fill="#FFFFFF" stroke="#000000" strokeWidth="1"/>
-                  <circle cx="108" cy="12" r="6" fill="#000000"/>
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-left">What makes certain meetings productive vs. time-wasters?</h3>
-              <p className="text-gray-600 text-left">Understand the structural elements that lead to effective collaboration.</p>
-            </div>
-            
-            <div className="text-left">
-              <div className="flex justify-start mb-4">
-                <svg width="80" height="16" viewBox="0 0 120 24" xmlns="http://www.w3.org/2000/svg">
-                  <line x1="0" y1="12" x2="120" y2="12" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="12" y1="4" x2="12" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="36" y1="4" x2="36" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="60" y1="4" x2="60" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="84" y1="4" x2="84" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <line x1="108" y1="4" x2="108" y2="20" stroke="#D1D5DB" strokeWidth="1"/>
-                  <circle cx="12" cy="12" r="6" fill="#000000"/>
-                  <circle cx="36" cy="12" r="6" fill="#FFFFFF" stroke="#000000" strokeWidth="1"/>
-                  <circle cx="60" cy="12" r="6" fill="#000000"/>
-                  <circle cx="84" cy="12" r="6" fill="#FFFFFF" stroke="#000000" strokeWidth="1"/>
-                  <circle cx="108" cy="12" r="6" fill="#000000"/>
-                </svg>
-              </div>
-              <h3 className="text-xl font-semibold mb-2 text-left">How do you scale collaborative intelligence?</h3>
-              <p className="text-gray-600 text-left">Learn how to replicate successful collaboration patterns across your organization.</p>
-            </div>
-          </div>
-        </div>
-      </div>
 
-      {/* Solution Section */}
-      <section className="section-header bg-gray-50">
-        <div className="header-content">
-          <h2>The Answer: Conversational DNA</h2>
-        </div>
-      </section>
+      {/* What We Do Section */}
       <div className="py-16 px-4 bg-gray-50">
-        <div className="container">
-          <p className="mb-12 max-w-2xl">
-            After analyzing hundreds of conversations, we've discovered that productive dialogue follows detectable patterns—like genetic sequences—that can be mapped, measured, and replicated.
-          </p>
-          
-          <div className="grid md:grid-cols-2 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-left">What You Get</h3>
-              <ul className="space-y-2">
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-1">✓</span>
-                  <span className="text-left">Cognitive compatibility scores for each participant</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-1">✓</span>
-                  <span className="text-left">Specific intervention suggestions for better collaboration</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-1">✓</span>
-                  <span className="text-left">Predictive insights about group dynamics</span>
-                </li>
-                <li className="flex items-start">
-                  <span className="text-green-500 mr-2 mt-1">✓</span>
-                  <span className="text-left">Benchmarking against high-performing teams</span>
-                </li>
-              </ul>
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">See How You Really Think Together</h2>
+            <p className="text-lg text-gray-600 max-w-2xl mx-auto">
+              Upload any conversation and get a comprehensive analysis of cognitive patterns, collaboration dynamics, and hidden insights
+            </p>
+          </div>
+
+          <div className="grid md:grid-cols-3 gap-8">
+            <div className="bg-white p-8 rounded-lg border-2 border-gray-200 text-center">
+              <div className="text-4xl mb-4">🔍</div>
+              <h3 className="text-xl font-semibold mb-4">Pattern Detection</h3>
+              <p className="text-gray-600">
+                Identify unique cognitive "moves" like causal reversal, binary dissolution, and collaborative building in real conversations
+              </p>
             </div>
-            
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-left">How It Works</h3>
-              <div className="space-y-4">
-                <div className="flex items-start">
-                  <div className="bg-yellow-300 rounded-full w-6 h-6 flex-shrink-0 flex items-center justify-center mr-3 mt-0.5">1</div>
-                  <p className="text-left">Upload a meeting transcript or record a session</p>
+
+            <div className="bg-white p-8 rounded-lg border-2 border-gray-200 text-center">
+              <div className="text-4xl mb-4">🤝</div>
+              <h3 className="text-xl font-semibold mb-4">Collaboration Analysis</h3>
+              <p className="text-gray-600">
+                Discover how well participants work together intellectually and predict innovation potential
+              </p>
+            </div>
+
+            <div className="bg-white p-8 rounded-lg border-2 border-gray-200 text-center">
+              <div className="text-4xl mb-4">👻</div>
+              <h3 className="text-xl font-semibold mb-4">Ghost Conversations</h3>
+              <p className="text-gray-600">
+                Reveal hidden dialogues with academic, philosophical, and cultural voices that shape the discussion
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* How It Works Section */}
+      <div className="py-16 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">How It Works</h2>
+            <p className="text-lg text-gray-600">
+              Three simple steps to unlock the cognitive DNA of any conversation
+            </p>
+          </div>
+
+          <div className="space-y-8">
+            <div className="flex items-center">
+              <div className="bg-yellow-300 text-black w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-6 flex-shrink-0">
+                1
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Upload Your Conversation</h3>
+                <p className="text-gray-600">
+                  Drop in any text file, paste conversation text, or upload meeting transcripts. We support .txt, .json, .csv, and .md formats.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <div className="bg-yellow-300 text-black w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-6 flex-shrink-0">
+                2
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">AI Analysis</h3>
+                <p className="text-gray-600">
+                  Our advanced AI identifies cognitive patterns, maps collaboration dynamics, and detects hidden conversational structures using breakthrough methodology.
+                </p>
+              </div>
+            </div>
+
+            <div className="flex items-center">
+              <div className="bg-yellow-300 text-black w-12 h-12 rounded-full flex items-center justify-center text-xl font-bold mr-6 flex-shrink-0">
+                3
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold mb-2">Get Your Report</h3>
+                <p className="text-gray-600">
+                  Download a comprehensive analysis including cognitive DNA profiles, collaboration scores, pattern insights, and actionable recommendations.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Results Preview Section */}
+      <div className="py-16 px-4 bg-gray-50">
+        <div className="max-w-4xl mx-auto">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">What You'll Discover</h2>
+            <p className="text-lg text-gray-600">
+              Every analysis includes detailed insights into how minds work together
+            </p>
+          </div>
+
+          <div className="bg-white border-2 border-gray-200 rounded-lg p-8">
+            <div className="grid md:grid-cols-2 gap-8">
+              <div>
+                <h3 className="text-xl font-semibold mb-4">🧬 Cognitive DNA Profiles</h3>
+                <div className="bg-gray-50 p-4 rounded font-mono text-center mb-4">
+                  QRQRSRQ + BSESBS
                 </div>
-                <div className="flex items-start">
-                  <div className="bg-yellow-300 rounded-full w-6 h-6 flex-shrink-0 flex items-center justify-center mr-3 mt-0.5">2</div>
-                  <p className="text-left">Our AI analyzes conversational patterns and cognitive styles</p>
+                <p className="text-gray-600 text-sm">
+                  Unique thinking pattern fingerprints showing how each participant characteristically engages with ideas
+                </p>
+              </div>
+
+              <div>
+                <h3 className="text-xl font-semibold mb-4">📊 Collaboration Metrics</h3>
+                <div className="space-y-2">
+                  <div className="flex justify-between">
+                    <span>Complementarity Score</span>
+                    <span className="font-bold">87%</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Innovation Potential</span>
+                    <span className="font-bold text-green-600">High</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Balance Rating</span>
+                    <span className="font-bold">75%</span>
+                  </div>
                 </div>
-                <div className="flex items-start">
-                  <div className="bg-yellow-300 rounded-full w-6 h-6 flex-shrink-0 flex items-center justify-center mr-3 mt-0.5">3</div>
-                  <p className="text-left">Receive your team's unique conversational DNA profile</p>
+              </div>
+            </div>
+
+            <div className="mt-8 pt-8 border-t">
+              <h3 className="text-xl font-semibold mb-4">📝 Sample Insights</h3>
+              <div className="grid md:grid-cols-2 gap-4">
+                <div className="bg-blue-50 p-4 rounded">
+                  <p className="text-sm"><strong>Pattern Detected:</strong> Binary Dissolution (23%)</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    "Rather than choosing A or B, what if we consider C?" - Participant shows sophisticated thinking beyond simple choices
+                  </p>
                 </div>
-                <div className="flex items-start">
-                  <div className="bg-yellow-300 rounded-full w-6 h-6 flex-shrink-0 flex items-center justify-center mr-3 mt-0.5">4</div>
-                  <p className="text-left">Apply insights to improve team collaboration and performance</p>
+                <div className="bg-green-50 p-4 rounded">
+                  <p className="text-sm"><strong>Collaboration Strength:</strong> Cognitive Complementarity</p>
+                  <p className="text-sm text-gray-600 mt-1">
+                    Perfect balance between divergent exploration (43%) and convergent synthesis (44%)
+                  </p>
                 </div>
               </div>
             </div>
@@ -159,15 +178,54 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <section className="section-header bg-black text-white">
-        <div className="header-content text-center">
-          <h2>Ready to unlock your team's potential?</h2>
-          <p className="text-xl mb-8 max-w-2xl mx-auto">Start analyzing your conversations today and discover the hidden patterns in your team's communication.</p>
-          <Link href="/upload" className="btn btn-primary">
-            Get Started for Free
+      <div className="py-16 px-4">
+        <div className="max-w-2xl mx-auto text-center">
+          <h2 className="text-3xl font-bold mb-4">Ready to Discover Your Conversation DNA?</h2>
+          <p className="text-lg text-gray-600 mb-8">
+            Upload any conversation and get a comprehensive analysis in minutes. No signup required.
+          </p>
+          
+          <Link href="/upload">
+            <button className="bg-yellow-300 text-black px-12 py-4 rounded-lg text-xl font-bold hover:bg-yellow-500 transition-colors">
+              Start Your Analysis
+            </button>
           </Link>
+          
+          <div className="mt-8 text-sm text-gray-500">
+            <p>✓ Completely private analysis</p>
+            <p>✓ Download your report immediately</p>
+            <p>✓ No account creation needed</p>
+          </div>
         </div>
-      </section>
+      </div>
+
+      {/* Features Footer */}
+      <div className="bg-gray-50 py-12 px-4">
+        <div className="max-w-4xl mx-auto">
+          <div className="grid md:grid-cols-4 gap-6 text-center">
+            <div>
+              <div className="text-2xl mb-2">⚡</div>
+              <h4 className="font-semibold">Fast Analysis</h4>
+              <p className="text-sm text-gray-600">Results in 1-3 minutes</p>
+            </div>
+            <div>
+              <div className="text-2xl mb-2">🔒</div>
+              <h4 className="font-semibold">Privacy First</h4>
+              <p className="text-sm text-gray-600">Your data stays private</p>
+            </div>
+            <div>
+              <div className="text-2xl mb-2">🎯</div>
+              <h4 className="font-semibold">Actionable Insights</h4>
+              <p className="text-sm text-gray-600">Clear recommendations</p>
+            </div>
+            <div>
+              <div className="text-2xl mb-2">📊</div>
+              <h4 className="font-semibold">Comprehensive Reports</h4>
+              <p className="text-sm text-gray-600">Detailed analysis files</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   );
 }

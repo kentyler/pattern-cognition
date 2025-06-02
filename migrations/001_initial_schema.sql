@@ -1,16 +1,6 @@
--- Migration 001: Initial Schema
--- Created: 2024-12-31
--- Description: Core tables for pattern analysis platform
-
--- Enable extensions
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+CREATE EXTENSION IF NOT EXISTS "vector";
 
--- Create migration tracking table first
-CREATE TABLE IF NOT EXISTS schema_migrations (
-  version INTEGER PRIMARY KEY,
-  applied_at TIMESTAMP DEFAULT NOW(),
-  description TEXT
-);
 
 -- Users table
 CREATE TABLE users (
@@ -99,6 +89,108 @@ CREATE TABLE temp_content (
   expires_at TIMESTAMP DEFAULT (NOW() + INTERVAL '48 hours')
 );
 
--- Record this migration
-INSERT INTO schema_migrations (version, name) 
-VALUES (1, 'Initial schema creation');
+
+CREATE INDEX idx_sessions_user_id ON analysis_sessions(user_id);
+CREATE INDEX idx_sessions_timestamp ON analysis_sessions(session_timestamp);
+CREATE INDEX idx_dna_session_id ON conversation_dna(session_id);
+CREATE INDEX idx_patterns_session_id ON extended_patterns(session_id);
+CREATE INDEX idx_patterns_type ON extended_patterns(pattern_type);
+CREATE INDEX idx_temp_content_expires ON temp_content(expires_at);
+CREATE INDEX idx_collaboration_session ON collaboration_analysis(session_id);
+CREATE INDEX idx_research_pattern_type ON pattern_research_db(pattern_type);
+
+-- Conversations table
+CREATE TABLE conversations (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  user_id UUID,
+  title VARCHAR(255) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW(),
+  updated_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- DNA Analysis table
+CREATE TABLE dna_analysis (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  conversation_id UUID REFERENCES conversations(id) ON DELETE CASCADE,
+  participant_a_dna VARCHAR(50) NOT NULL,
+  participant_b_dna VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Collaboration Metrics table
+CREATE TABLE collaboration_metrics (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  conversation_id UUID REFERENCES conversations(id) ON DELETE CASCADE,
+  score INTEGER NOT NULL,
+  potential VARCHAR(50) NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Conversation Patterns table
+CREATE TABLE conversation_patterns (
+  id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+  conversation_id UUID REFERENCES conversations(id) ON DELETE CASCADE,
+  pattern_type VARCHAR(100) NOT NULL,
+  frequency FLOAT NOT NULL,
+  created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
+);
+
+-- Add indexes for better query performance
+CREATE INDEX idx_dna_analysis_conversation_id ON dna_analysis(conversation_id);
+CREATE INDEX idx_collaboration_metrics_conversation_id ON collaboration_metrics(conversation_id);
+CREATE INDEX idx_conversation_patterns_conversation_id ON conversation_patterns(conversation_id);
+CREATE INDEX idx_conversation_patterns_type ON conversation_patterns(pattern_type);
+
+ALTER TABLE conversations 
+ADD COLUMN annotated_text TEXT,
+ADD COLUMN pattern_annotations JSONB;
+
+ALTER TABLE collaboration_analysis 
+RENAME COLUMN session_id TO conversation_id;
+
+ALTER TABLE collaboration_analysis 
+DROP CONSTRAINT IF EXISTS collaboration_analysis_session_id_fkey,
+ADD CONSTRAINT collaboration_analysis_conversation_id_fkey 
+FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE;
+
+-- For conversation_dna table (if it exists)
+ALTER TABLE conversation_dna 
+RENAME COLUMN session_id TO conversation_id;
+
+ALTER TABLE conversation_dna 
+DROP CONSTRAINT IF EXISTS conversation_dna_session_id_fkey,
+ADD CONSTRAINT conversation_dna_conversation_id_fkey 
+FOREIGN KEY (conversation_id) REFERENCES conversations(id) ON DELETE CASCADE;
+
+-- Update the unique constraint on collaboration_analysis
+ALTER TABLE collaboration_analysis 
+DROP CONSTRAINT IF EXISTS collaboration_analysis_session_id_key,
+ADD CONSTRAINT collaboration_analysis_conversation_id_key UNIQUE (conversation_id);
+
+ALTER TABLE collaboration_analysis 
+ADD COLUMN IF NOT EXISTS score FLOAT;
+
+ALTER TABLE collaboration_analysis 
+ADD COLUMN IF NOT EXISTS potential FLOAT;
+
+ALTER TABLE collaboration_analysis 
+ALTER COLUMN score TYPE TEXT;
+
+ALTER TABLE collaboration_analysis 
+ALTER COLUMN potential TYPE TEXT;
+
+CREATE TABLE IF NOT EXISTS ghost_conversation_analysis (
+    id SERIAL PRIMARY KEY,
+    conversation_id UUID REFERENCES conversations(id) ON DELETE CASCADE,
+    ghost_partners JSONB,
+    conversational_flow JSONB,
+    conversation_dna JSONB,
+    ecology_analysis JSONB,
+    created_at TIMESTAMPTZ DEFAULT NOW(),
+    UNIQUE(conversation_id)
+);
+
+
+INSERT INTO users (id, email, created_at)
+       VALUES (gen_random_uuid(),  'anonymous@example.com', NOW())
+       RETURNING id
