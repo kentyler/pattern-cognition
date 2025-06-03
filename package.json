@@ -32,5 +32,6 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.3"
   }
+  
 }
 
