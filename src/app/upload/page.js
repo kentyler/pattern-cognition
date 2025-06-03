@@ -123,10 +123,12 @@ const LoadingState = ({ progress, filename }) => {
       
       <div className="space-y-3">
         {[
-          { label: 'Parsing conversation structure', progress: 20 },
-          { label: 'Extracting cognitive DNA patterns', progress: 40 },
-          { label: 'Analyzing collaboration dynamics', progress: 60 },
-          { label: 'Detecting ghost conversations', progress: 80 },
+          { label: 'Parsing conversation structure', progress: 15 },
+          { label: 'Extracting cognitive DNA patterns', progress: 30 },
+          { label: 'Analyzing collaboration dynamics', progress: 45 },
+          { label: 'Analyzing territorial dynamics', progress: 60 },
+          { label: 'Identifying lines of flight', progress: 75 },
+          { label: 'Detecting ghost conversations', progress: 85 },
           { label: 'Generating comprehensive report', progress: 95 },
         ].map((step, i) => (
           <div key={i} className="flex items-center">
@@ -166,6 +168,8 @@ const SuccessState = ({ filename, onAnalyzeAnother }) => {
             <li>• Cognitive DNA profiles for each participant</li>
             <li>• Collaboration analysis and compatibility scores</li>
             <li>• Detected conversational patterns</li>
+            <li>• Territorial dynamics analysis</li>
+            <li>• Lines of flight and creative breakthroughs</li>
             <li>• Ghost conversation analysis</li>
             <li>• Key insights and recommendations</li>
             <li>• Liminal topics for future exploration</li>
@@ -278,7 +282,10 @@ export default function ConversationAnalysisPage() {
       const response = await fetch('/api/analysis', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ text: content }),
+        body: JSON.stringify({ 
+          text: content,
+          filename: sourceFilename // Add filename to the request
+        }),
         signal: controller.signal
       });
 

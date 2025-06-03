@@ -10,6 +10,7 @@ const navLinks = [
   { href: '/about', label: 'About' },
   { href: '/how-it-works', label: 'How It Works' },
   { href: '/community', label: 'Community' },
+  { href: '/framework', label: 'Framework' },
 ];
 
 export default function Navigation() {

@@ -14,6 +14,7 @@
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.52.0",
+    "@supabase/supabase-js": "^2.49.9",
     "dotenv": "^16.5.0",
     "next": "15.3.3",
     "openai": "^5.0.1",

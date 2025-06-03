@@ -23,7 +23,7 @@ export default function HowItWorks() {
                 <span className="text-2xl font-bold text-black">1</span>
               </div>
               <h3 className="text-xl font-semibold mb-2 text-left">Upload Transcript</h3>
-              <p className="text-gray-600 text-left">Submit your meeting, call, or discussion transcript</p>
+              <p className="text-gray-600 text-left">Submit your meeting, call, or discussion transcript. The transcript should have some indicator for which participant is speaking. Right now the only file formats that we can accept are text files.</p>
             </div>
             
             <div className="text-left">
