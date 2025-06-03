@@ -43,4 +43,5 @@ next-env.d.ts
 pg_dump_public_schema.ps1
 
 
+mcp/.env
 
