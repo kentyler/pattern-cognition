@@ -5,8 +5,10 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
-    "start": "next start",
+    "build": "next build && cd mcp && npm install",
+    "start": "concurrently \"next start\" \"cd mcp && npm start\" --names \"WEB,MCP\" --prefix name",
+    "build:web": "next build",
+    "start:web": "next start",
     "lint": "next lint",
     "migrate": "node migrations/migrate.js",
     "migrate:status": "node -e \"import('./migrations/migrate.js').then(m => m.getCurrentVersion().then(v => console.log('Current version:', v)))\"",
@@ -19,6 +21,7 @@
   "dependencies": {
     "@anthropic-ai/sdk": "^0.52.0",
     "@supabase/supabase-js": "^2.49.9",
+    "concurrently": "^9.1.2",
     "dotenv": "^16.5.0",
     "next": "15.3.3",
     "openai": "^5.0.1",
