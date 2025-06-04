@@ -22,10 +22,15 @@
           📄 index.pack.gz.old
         📁 client-development-fallback/
           📄 0.pack.gz
+          📄 1.pack.gz
           📄 index.pack.gz
+          📄 index.pack.gz.old
         📁 server-development/
           📄 0.pack.gz
           📄 1.pack.gz
+          📄 10.pack.gz
+          📄 11.pack.gz
+          📄 12.pack.gz
           📄 2.pack.gz
           📄 3.pack.gz
           📄 4.pack.gz
@@ -33,20 +38,25 @@
           📄 6.pack.gz
           📄 7.pack.gz
           📄 8.pack.gz
+          📄 9.pack.gz
           📄 index.pack.gz
           📄 index.pack.gz.old
+    📄 fallback-build-manifest.json
     📄 package.json
     📄 react-loadable-manifest.json
     📁 server/
       📁 app/
+        📁 api/
+          📁 analysis/
+            📄 route.js
+            📄 route_client-reference-manifest.js
         📁 favicon.ico/
           📄 route.js
-        📁 framework/
+        📁 upload/
           📄 page.js
           📄 page_client-reference-manifest.js
-        📄 page.js
-        📄 page_client-reference-manifest.js
-        📁 upload/
+        📁 _not-found/
+          📄 page.js
           📄 page_client-reference-manifest.js
       📄 app-paths-manifest.json
       📄 interception-route-rewrite-manifest.js
@@ -60,18 +70,29 @@
       📄 server-reference-manifest.js
       📄 server-reference-manifest.json
       📁 vendor-chunks/
+        📄 @anthropic-ai.js
+        📄 @supabase.js
         📄 @swc.js
         📄 next.js
+        📄 tr46.js
+        📄 webidl-conversions.js
+        📄 whatwg-url.js
+        📄 ws.js
       📄 webpack-runtime.js
     📁 static/
       📁 chunks/
         📁 app/
-          📁 framework/
-            📄 page.js
+          📁 api/
+            📁 analysis/
+              📄 route.js
           📄 layout.js
-          📄 page.js
           📁 upload/
+            📄 page.js
+          📁 _not-found/
+            📄 page.js
         📄 app-pages-internals.js
+        📁 fallback/
+          📁 pages/
         📄 main-app.js
         📁 pages/
         📄 polyfills.js
@@ -91,23 +112,36 @@
         📄 9610d9e46709d722-s.woff2
         📄 ba015fad6dcf6784-s.woff2
       📁 webpack/
-        📄 5e903854bc1411a9.webpack.hot-update.json
         📄 633457081244afec._.hot-update.json
-        📄 webpack.5e903854bc1411a9.hot-update.js
+        📄 9498182358d8bf94.webpack.hot-update.json
+        📄 ac9a0e985e5f70e5.webpack.hot-update.json
+        📄 webpack.9498182358d8bf94.hot-update.js
+        📄 webpack.ac9a0e985e5f70e5.hot-update.js
     📄 trace
     📁 types/
       📁 app/
-        📁 framework/
-          📄 page.ts
+        📁 api/
+          📁 analysis/
+            📄 route.ts
         📄 layout.ts
-        📄 page.ts
         📁 upload/
           📄 page.ts
       📄 cache-life.d.ts
       📄 package.json
+  📄 addtogit.txt
+  📄 dev-start.ps1
   📄 dir-tree.js
+  📄 directory-tree.txt
   📄 eslint.config.mjs
   📄 jsconfig.json
+  📁 mcp/
+    📄 .env
+    📄 package-lock.json
+    📄 package.json
+    📄 README.md
+    📄 server.js
+    📁 tools/
+      📄 analyzer.js
   📁 migrations/
     📄 001_initial_schema.sql
     📄 002_add_indexes.sql
@@ -165,7 +199,10 @@
       📄 tabContent.js
       📄 uploadUI.js
     📁 lib/
+      📄 analysisPrompt.js
+      📄 analysisService.js
       📄 database.js
       📄 db.js
       📄 llm.js
       📄 supabase.js
+  📄 test-analysis.js
