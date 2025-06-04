@@ -1,7 +1,7 @@
 // mcp/tools/analyzer.js
 
 
-import { performConversationAnalysis } from '../../src/lib/analysisService.js';
+import { performConversationAnalysis } from '../../lib/analysisService.js';
 
 export async function analyzeConversationTool(transcript) {
   try {
