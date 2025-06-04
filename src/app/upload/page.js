@@ -279,7 +279,7 @@ export default function ConversationAnalysisPage() {
       const controller = new AbortController();
       const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout
 
-      const response = await fetch('https://pattern-cognition-mcp.onrender.com/api/analyze', {
+      const response = await fetch('https://pattern-cognition-mcp-web.onrender.com/api/analyze', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ 
