@@ -27,16 +27,9 @@
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-   "@anthropic-ai/sdk": "^0.52.0",
-    "@supabase/supabase-js": "^2.49.9",
-    "dotenv": "^16.5.0",
-    "next": "15.3.3",
-    "openai": "^5.0.1",
-    "pg": "^8.16.0",
-    "react": "^19.0.0",
-    "react-dom": "^19.0.0"
+    "@eslint/eslintrc": "^3",
+    "concurrently": "^9.1.2",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.3"
   }
-
 }
-
- 
