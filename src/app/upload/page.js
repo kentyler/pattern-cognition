@@ -1,3 +1,5 @@
+'use client';
+
 // Handle file upload and analysis
 const handleAnalysis = useCallback(async (content, sourceFilename = null) => {
   setUploadState('analyzing');

@@ -7,31 +7,15 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "build:web": "next build",
-    "start:web": "next start",
-    "lint": "next lint",
-    "migrate": "node migrations/migrate.js",
-    "migrate:status": "node -e \"import('./migrations/migrate.js').then(m => m.getCurrentVersion().then(v => console.log('Current version:', v)))\"",
-    "migrate:reset": "echo 'WARNING: This will destroy all data!' && read -p 'Continue? (y/N) ' confirm && [[ $confirm == [yY] ]] && psql \"$PATTERN_DB_URL\" -c 'DROP SCHEMA public CASCADE; CREATE SCHEMA public;' && npm run migrate",
-    "mcp:install": "cd mcp && npm install",
-    "mcp:start": "cd mcp && npm start",
-    "mcp:dev": "cd mcp && npm run dev",
-    "dev:all": "concurrently \"npm run dev\" \"npm run mcp:start\" --names \"WEB,MCP\" --prefix name --kill-others"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@anthropic-ai/sdk": "^0.52.0",
-    "@supabase/supabase-js": "^2.49.9",
-    "concurrently": "^9.1.2",
-    "dotenv": "^16.5.0",
     "next": "15.3.3",
-    "openai": "^5.0.1",
-    "pg": "^8.16.0",
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
-    "concurrently": "^9.1.2",
     "eslint": "^9.28.0",
     "eslint-config-next": "15.3.3"
   }
