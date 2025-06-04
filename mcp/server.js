@@ -10,6 +10,7 @@ import {
   CallToolRequestSchema,
   ListToolsRequestSchema,
 } from '@modelcontextprotocol/sdk/types.js';
+import http from 'http';
 
 import { analyzeConversationTool } from './tools/analyzer.js';
 
@@ -25,6 +26,63 @@ class ConversationalDNAServer {
     });
 
     this.setupToolHandlers();
+    this.setupHealthCheck();
+  }
+
+  setupHealthCheck() {
+    // Create HTTP server for health checks (required for Render)
+    this.healthServer = http.createServer((req, res) => {
+      // Enable CORS
+      res.setHeader('Access-Control-Allow-Origin', '*');
+      res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+
+      if (req.method === 'OPTIONS') {
+        res.writeHead(200);
+        res.end();
+        return;
+      }
+
+      if (req.url === '/health' || req.url === '/' || req.url === '/status') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          status: 'healthy',
+          service: 'conversational-dna-analyzer',
+          version: '1.0.0',
+          timestamp: new Date().toISOString(),
+          uptime: process.uptime()
+        }));
+      } else {
+        res.writeHead(404, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          error: 'Not Found',
+          message: 'Health check endpoint available at /health'
+        }));
+      }
+    });
+
+    const PORT = process.env.PORT || 3001;
+    this.healthServer.listen(PORT, '0.0.0.0', () => {
+      console.error(`Health check server listening on port ${PORT}`);
+      console.error(`Health endpoint: http://localhost:${PORT}/health`);
+    });
+
+    // Graceful shutdown
+    process.on('SIGTERM', () => {
+      console.error('SIGTERM received, shutting down gracefully...');
+      this.healthServer.close(() => {
+        console.error('Health server closed');
+        process.exit(0);
+      });
+    });
+
+    process.on('SIGINT', () => {
+      console.error('SIGINT received, shutting down gracefully...');
+      this.healthServer.close(() => {
+        console.error('Health server closed');
+        process.exit(0);
+      });
+    });
   }
 
   setupToolHandlers() {
@@ -75,9 +133,15 @@ class ConversationalDNAServer {
   }
 
   async start() {
-    const transport = new StdioServerTransport();
-    await this.server.connect(transport);
-    console.error("Conversational DNA MCP Server running on stdio");
+    try {
+      const transport = new StdioServerTransport();
+      await this.server.connect(transport);
+      console.error("Conversational DNA MCP Server running on stdio");
+      console.error("MCP server ready for connections");
+    } catch (error) {
+      console.error("Failed to start MCP server:", error);
+      process.exit(1);
+    }
   }
 }
 
