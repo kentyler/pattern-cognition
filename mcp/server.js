@@ -30,12 +30,12 @@ class ConversationalDNAServer {
   }
 
   setupHealthCheck() {
-    // Create HTTP server for health checks (required for Render)
-    this.healthServer = http.createServer((req, res) => {
-      // Enable CORS
+    // Create HTTP server for health checks and API endpoints
+    this.healthServer = http.createServer(async (req, res) => {
+      // Enable CORS for Chrome extension
       res.setHeader('Access-Control-Allow-Origin', '*');
       res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS');
-      res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+      res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
 
       if (req.method === 'OPTIONS') {
         res.writeHead(200);
@@ -43,6 +43,7 @@ class ConversationalDNAServer {
         return;
       }
 
+      // Health check endpoints
       if (req.url === '/health' || req.url === '/' || req.url === '/status') {
         res.writeHead(200, { 'Content-Type': 'application/json' });
         res.end(JSON.stringify({
@@ -52,26 +53,86 @@ class ConversationalDNAServer {
           timestamp: new Date().toISOString(),
           uptime: process.uptime()
         }));
-      } else {
-        res.writeHead(404, { 'Content-Type': 'application/json' });
-        res.end(JSON.stringify({
-          error: 'Not Found',
-          message: 'Health check endpoint available at /health'
-        }));
+        return;
       }
+
+      // API endpoint for Chrome extension
+      if (req.url === '/api/analyze' && req.method === 'POST') {
+        let body = '';
+        req.on('data', chunk => body += chunk);
+        req.on('end', async () => {
+          try {
+            const { transcript } = JSON.parse(body);
+            
+            if (!transcript) {
+              res.writeHead(400, { 'Content-Type': 'application/json' });
+              res.end(JSON.stringify({ error: 'Transcript is required' }));
+              return;
+            }
+
+            console.log('Analyzing transcript for Chrome extension...');
+            const analysis = await analyzeConversationTool(transcript);
+            
+            res.writeHead(200, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({
+              success: true,
+              analysis: analysis,
+              timestamp: new Date().toISOString()
+            }));
+            
+          } catch (error) {
+            console.error('Analysis error:', error);
+            res.writeHead(500, { 'Content-Type': 'application/json' });
+            res.end(JSON.stringify({ 
+              success: false,
+              error: error.message 
+            }));
+          }
+        });
+        return;
+      }
+
+      // API info endpoint
+      if (req.url === '/api' && req.method === 'GET') {
+        res.writeHead(200, { 'Content-Type': 'application/json' });
+        res.end(JSON.stringify({
+          service: 'Conversational DNA Analyzer',
+          version: '1.0.0',
+          endpoints: {
+            analyze: 'POST /api/analyze',
+            health: 'GET /health'
+          },
+          usage: {
+            analyze: {
+              method: 'POST',
+              body: { transcript: 'Speaker1: Hello\\nSpeaker2: Hi there...' },
+              response: { success: true, analysis: '...', timestamp: '...' }
+            }
+          }
+        }));
+        return;
+      }
+
+      // 404 for unknown endpoints
+      res.writeHead(404, { 'Content-Type': 'application/json' });
+      res.end(JSON.stringify({
+        error: 'Not Found',
+        available_endpoints: ['/health', '/api', '/api/analyze']
+      }));
     });
 
     const PORT = process.env.PORT || 3001;
     this.healthServer.listen(PORT, '0.0.0.0', () => {
-      console.error(`Health check server listening on port ${PORT}`);
+      console.error(`Server listening on port ${PORT}`);
       console.error(`Health endpoint: http://localhost:${PORT}/health`);
+      console.error(`API endpoint: http://localhost:${PORT}/api/analyze`);
     });
 
     // Graceful shutdown
     process.on('SIGTERM', () => {
       console.error('SIGTERM received, shutting down gracefully...');
       this.healthServer.close(() => {
-        console.error('Health server closed');
+        console.error('Server closed');
         process.exit(0);
       });
     });
@@ -79,7 +140,7 @@ class ConversationalDNAServer {
     process.on('SIGINT', () => {
       console.error('SIGINT received, shutting down gracefully...');
       this.healthServer.close(() => {
-        console.error('Health server closed');
+        console.error('Server closed');
         process.exit(0);
       });
     });
