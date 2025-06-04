@@ -5,8 +5,8 @@
   "type": "module",
   "scripts": {
     "dev": "next dev",
-    "build": "cd mcp && npm install",
-    "start": "cd mcp && npm start",
+    "build": "next build",
+    "start": "next start",
     "build:web": "next build",
     "start:web": "next start",
     "lint": "next lint",
