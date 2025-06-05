@@ -70,7 +70,7 @@ const UploadUI = ({ onFileUpload, onTextUpload, onDragOver, onDragLeave, onDrop,
           />
           <div className="flex justify-between items-center mt-4">
             <div className="text-sm text-gray-500">
-              {textInput.length} characters {textInput.length > 100000 && '(too long - please shorten)'}
+              {textInput.length} characters {textInput.length > 250000 && '(too long - please shorten)'}
             </div>
             <div className="space-x-3">
               <button
@@ -90,7 +90,7 @@ const UploadUI = ({ onFileUpload, onTextUpload, onDragOver, onDragLeave, onDrop,
                     setShowTextInput(false);
                   }
                 }}
-                disabled={!textInput.trim() || textInput.length > 100000}
+                disabled={!textInput.trim() || textInput.length > 250000}
                 className="bg-blue-600 text-white px-6 py-2 rounded-lg font-medium hover:bg-blue-700 disabled:bg-gray-300 disabled:cursor-not-allowed transition-colors"
               >
                 Analyze Text
@@ -123,13 +123,14 @@ const LoadingState = ({ progress, filename }) => {
       
       <div className="space-y-3">
         {[
-          { label: 'Parsing conversation structure', progress: 15 },
-          { label: 'Extracting cognitive DNA patterns', progress: 30 },
-          { label: 'Analyzing collaboration dynamics', progress: 45 },
-          { label: 'Analyzing territorial dynamics', progress: 60 },
-          { label: 'Identifying lines of flight', progress: 75 },
-          { label: 'Detecting ghost conversations', progress: 85 },
-          { label: 'Generating comprehensive report', progress: 95 },
+          { label: 'Parsing conversation structure: Identifying speakers and mapping exchange patterns', progress: 20 },
+          { label: 'Extracting cognitive DNA patterns: Mapping each participant\'s thinking style signature', progress: 30 },
+          { label: 'Analyzing collaboration dynamics: Measuring conversational flow and idea development', progress: 40 },
+          { label: 'Analyzing territorial dynamics: Identifying how participants claim, defend, and share conceptual spaces', progress: 50 },
+          { label: 'Identifying lines of flight: Detecting moments where conversation breaks into new creative territory', progress: 60 },
+          { label: 'Detecting ghost conversations: Uncovering implicit assumptions and unspoken dialogues', progress: 70 },
+          { label: 'Topical Summaries: Summarizing content discussed', progress: 80},
+          { label: 'Generating comprehensive report: Synthesizing insights and recommendations', progress: 90 },
         ].map((step, i) => (
           <div key={i} className="flex items-center">
             <div className={`w-5 h-5 rounded-full flex items-center justify-center mr-3 text-sm ${
@@ -266,18 +267,21 @@ export default function ConversationAnalysisPage() {
     const progressInterval = simulateProgress();
 
     try {
-      // Validate content
+      // Validate content with detailed diagnostics
       if (!content || content.trim() === '') {
         throw new Error('The content is empty. Please provide conversation text.');
       }
 
-      if (content.length > 100000) {
-        throw new Error('Content is too large (over 100,000 characters). Please use a shorter conversation or extract key portions.');
+      // Add detailed character count in error message
+      if (content.length > 250000) {
+        throw new Error(`Content is too large: ${content.length.toLocaleString()} characters (limit: 250,000). Please use a shorter conversation or extract key portions.`);
       }
+      
+      console.log(`Processing file with ${content.length.toLocaleString()} characters...`);
 
       // Call MCP analysis API directly
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 180000); // 3 minute timeout
+      const timeoutId = setTimeout(() => controller.abort(), 300000); // 5 minute timeout for larger files
 
       const response = await fetch('https://pattern-cognition-mcp-web.onrender.com/api/analyze', {
         method: 'POST',
@@ -312,11 +316,46 @@ export default function ConversationAnalysisPage() {
         ? contentDisposition.split('filename=')[1]?.replace(/"/g, '')
         : `conversation-analysis-${new Date().toISOString().slice(0, 10)}.md`;
 
-      // Get the report content
-      const reportContent = await response.text();
+      // Get the report content and parse JSON wrapper if present
+      const rawContent = await response.text();
+      
+      // Extract markdown content from JSON wrapper if present
+      let reportContent = rawContent;
+      try {
+        const jsonResponse = JSON.parse(rawContent);
+        
+        // Check for the actual MCP server response format
+        if (jsonResponse && jsonResponse.success === true && jsonResponse.analysis) {
+          reportContent = jsonResponse.analysis;
+          console.log("Extracted markdown content from MCP JSON wrapper: {success, analysis} format");
+        }
+        // Check for alternative MCP JSON structure format
+        else if (jsonResponse?.content?.length > 0 && jsonResponse.content[0]?.type === "text") {
+          reportContent = jsonResponse.content[0].text;
+          console.log("Extracted markdown content from MCP JSON wrapper: {content[].type/text} format");
+        }
+      } catch (e) {
+        // If parsing fails, it's likely already plain markdown text
+        console.log("Response appears to be plain markdown already");
+      }
 
+      // Remove unwanted footer lines if they exist
+      let cleanedContent = reportContent;
+      const unwantedLines = [
+        "**💾 Analysis Saved**: This analysis has been stored in your Pattern Intelligence Platform database.",
+        "**🔗 Platform Access**: Visit conversationalai.us to track patterns over time and access advanced features."
+      ];
+      
+      // Remove each unwanted line
+      unwantedLines.forEach(line => {
+        cleanedContent = cleanedContent.replace(line, '');
+      });
+      
+      // Clean up any trailing newlines that might be left
+      cleanedContent = cleanedContent.replace(/\n+$/g, '\n');
+      
       // Create and trigger download
-      const blob = new Blob([reportContent], { type: 'text/markdown' });
+      const blob = new Blob([cleanedContent], { type: 'text/markdown' });
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
@@ -337,8 +376,17 @@ export default function ConversationAnalysisPage() {
       
       if (err.name === 'AbortError') {
         setError('Analysis timed out. Please try again with a shorter conversation.');
+      } else if (err.message) {
+        setError(err.message);
+        // Log more detailed diagnostics to console
+        console.error('Detailed error diagnostics:', {
+          errorType: err.constructor.name,
+          errorMessage: err.message,
+          contentLength: content ? content.length : 0,
+          lineCount: content ? content.split('\n').filter(l => l.trim()).length : 0
+        });
       } else {
-        setError(err.message || 'An unexpected error occurred during analysis.');
+        setError('An unexpected error occurred during analysis.');
       }
       
       setUploadState('error');
@@ -364,10 +412,39 @@ export default function ConversationAnalysisPage() {
         throw new Error('The file appears to be empty.');
       }
   
-      // Basic check for conversation-like content
-      const lines = content.split('\n').filter(line => line.trim());
-      if (lines.length < 3) {
-        throw new Error('This doesn\'t appear to be a conversation. Please upload a file with multiple exchanges between participants.');
+      // Basic check for conversation-like content with detailed diagnostics
+      // Handle various types of line breaks (\r\n, \n, \r)
+      const normalizedContent = content.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+      
+      // Log the raw content start for debugging
+      console.log('Raw content start (first 100 chars):', content.substring(0, 100).replace(/\n/g, '\\n').replace(/\r/g, '\\r'));
+      
+      // Split by all types of line breaks and count
+      const lines = normalizedContent.split('\n').filter(line => line.trim());
+      console.log(`File contains ${lines.length.toLocaleString()} non-empty lines.`);
+      
+      // Log some sample lines for debugging
+      console.log('Sample lines:', lines.slice(0, 5));
+      
+      if (lines.length < 2) {
+        throw new Error(`This doesn't appear to be a conversation. Found only ${lines.length} line(s). Please upload a file with multiple exchanges between participants. The file may need to be saved with proper line breaks.`);
+      }
+      
+      // Look for conversation patterns (speaker indicators like "Name:" or similar patterns)
+      const speakerLineCount = lines.filter(line => {
+        return /^[\w\s.']+:/i.test(line.trim()) || // Common pattern like "John: Hello"
+               /^\[?[\w\s.']+\]?\s*[@\d:]/.test(line.trim()); // Patterns like "[John] 10:30" or "John @10:30"
+      }).length;
+      
+      console.log(`Detected approximately ${speakerLineCount} lines that appear to be from speakers.`);
+      
+      if (speakerLineCount < 2) {
+        throw new Error(`Could not detect a conversation pattern. Please ensure your file contains multiple speaker exchanges (e.g., "Name: text" format). Found ${speakerLineCount} potential speaker line(s).`);
+      }
+      
+      // Handle larger files more gracefully
+      if (lines.length > 1000) {
+        console.log(`Large file detected with ${lines.length} lines.`);
       }
   
       await handleAnalysis(content, file.name);
